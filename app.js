@@ -6,7 +6,19 @@ let tentativas = 1;
 function exibirTextoNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
-    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate:1.2});
+
+    // Adicionando um botão para iniciar a leitura em dispositivos móveis
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        let botaoAudio = document.createElement('button');
+        botaoAudio.textContent = 'Ouvir';
+        botaoAudio.addEventListener('click', function () {
+            responsiveVoice.speak(texto, 'Brazilian Portuguese Female', { rate: 1.2 });
+        });
+        campo.appendChild(botaoAudio);
+    } else {
+        // Se não for um dispositivo móvel, reproduza automaticamente
+        responsiveVoice.speak(texto, 'Brazilian Portuguese Female', { rate: 1.2 });
+    }
 }
 
 function exibirMensagemInicial() {
